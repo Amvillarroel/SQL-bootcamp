@@ -4,7 +4,7 @@
 **Módulo:** 2 - Diseñar el Modelo de Datos (MER)
 **Fase:** 2.1 - Análisis Funcional
 **Documento:** 01_Descripcion_Empresa.md
-**Estado:** BORRADOR v1.0
+**Estado:** Functional Baseline v1.0
 
 ---
 
@@ -248,6 +248,6 @@ El propósito es que el estudiante trabaje siempre sobre un mismo contexto empre
 
 Versión: 1.0
 
-Estado: **BORRADOR**
+Estado: **APROBADO**
 
 Este documento permanecerá en estado BORRADOR hasta finalizar el análisis funcional del sistema. Posteriormente será revisado, aprobado y utilizado como base para el diseño del Modelo Entidad-Relación (MER).

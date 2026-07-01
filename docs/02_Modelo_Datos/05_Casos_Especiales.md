@@ -4,7 +4,7 @@
 **Módulo:** 2 - Diseñar el Modelo de Datos (MER)
 **Fase:** 2.1 - Análisis Funcional
 **Documento:** 05_Casos_Especiales.md
-**Estado:** BORRADOR v1.0
+**Estado:** Functional Baseline v1.0
 
 ---
 
@@ -297,6 +297,6 @@ Durante el desarrollo del proyecto podrán incorporarse nuevos casos especiales 
 
 Versión: 1.0
 
-Estado: **BORRADOR**
+Estado: **APROBADO**
 
 Este documento permanecerá en estado BORRADOR hasta la aprobación definitiva del análisis funcional.

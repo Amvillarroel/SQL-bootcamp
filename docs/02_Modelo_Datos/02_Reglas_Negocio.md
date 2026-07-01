@@ -4,7 +4,7 @@
 **Módulo:** 2 - Diseñar el Modelo de Datos (MER)
 **Fase:** 2.1 - Análisis Funcional
 **Documento:** 02_Reglas_Negocio.md
-**Estado:** BORRADOR v1.0
+**Estado:** Functional Baseline v1.0
 
 ---
 
@@ -304,6 +304,6 @@ Toda modificación deberá quedar documentada para mantener la trazabilidad del 
 
 Versión: 1.0
 
-Estado: **BORRADOR**
+Estado: **APROBADO**
 
 Este documento permanecerá en estado BORRADOR hasta finalizar el análisis funcional y será utilizado como insumo principal para el diseño del Modelo Entidad-Relación (MER).

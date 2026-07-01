@@ -4,7 +4,7 @@
 **Módulo:** 2 - Diseñar el Modelo de Datos (MER)
 **Fase:** 2.1 - Análisis Funcional
 **Documento:** 04_Procesos_Negocio.md
-**Estado:** BORRADOR v1.0
+**Estado:** Functional Baseline v1.0
 
 ---
 
@@ -277,6 +277,6 @@ Toda modificación deberá quedar documentada para preservar la coherencia entre
 
 Versión: 1.0
 
-Estado: **BORRADOR**
+Estado: **APROBADO**
 
 Este documento permanecerá en estado BORRADOR hasta la finalización de la Fase 2.1 del análisis funcional.

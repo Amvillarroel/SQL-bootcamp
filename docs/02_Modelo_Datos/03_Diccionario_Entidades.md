@@ -4,7 +4,7 @@
 **Módulo:** 2 - Diseñar el Modelo de Datos (MER)
 **Fase:** 2.1 - Análisis Funcional
 **Documento:** 03_Diccionario_Entidades.md
-**Estado:** BORRADOR v1.0
+**Estado:** Functional Baseline v1.0
 
 ---
 
@@ -263,6 +263,6 @@ Toda modificación deberá quedar documentada para preservar la trazabilidad del
 
 Versión: 1.0
 
-Estado: **BORRADOR**
+Estado: **APROBADO**
 
 Este documento permanecerá en estado BORRADOR hasta concluir la Fase 2.1 del análisis funcional y servirá como insumo para la construcción del Modelo Entidad-Relación (MER).
