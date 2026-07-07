@@ -179,19 +179,12 @@ Las operaciones realizadas sobre dicho producto constituyen hechos del negocio y
 
 ---
 
-### Decisiones pendientes
+### Cuestiones pendientes
 
-Las siguientes decisiones serán resueltas durante el análisis de otras entidades relacionadas:
+Durante el análisis de las entidades relacionadas deberán resolverse las siguientes cuestiones de arquitectura:
 
-**MER-006 — Relación entre Producto y Proveedor**
-
-Se definirá si un producto podrá ser suministrado por uno o múltiples proveedores.
-
----
-
-**MER-007 — Gestión de precios**
-
-Se definirá la estrategia para representar los precios de compra y venta dentro del modelo de datos.
+* Definir la relación entre **Producto** y **Proveedor**.
+* Definir la estrategia para la administración de los precios de compra y venta.
 
 ---
 
@@ -204,7 +197,230 @@ Se definirá la estrategia para representar los precios de compra y venta dentro
 * MER-004
 * MER-005
 
-**Decisiones pendientes:**
+**Cuestiones pendientes:**
+
+* Relación entre Producto y Proveedor.
+* Estrategia de administración de precios.
+
+---
+
+## 3.3 ENT-003 — Categoría
+
+### Descripción
+
+La entidad **Categoría** representa un criterio de clasificación utilizado para organizar los productos comercializados por TechStore S.A.
+
+Su finalidad es facilitar la organización del catálogo, la navegación de productos, la elaboración de reportes y el análisis comercial.
+
+Las categorías constituyen información de referencia relativamente estable y forman parte de las entidades de catálogo del modelo.
+
+---
+
+### MER-006 — Relación entre Producto y Categoría
+
+#### Contexto
+
+Durante el análisis del modelo fue necesario definir si un producto podrá pertenecer simultáneamente a múltiples categorías o si cada producto estará asociado a una única categoría.
+
+#### Decisión
+
+Cada **Producto** pertenecerá a una única **Categoría**.
+
+Una categoría podrá contener múltiples productos.
+
+#### Justificación
+
+El modelo busca representar el comportamiento habitual de un ERP comercial, donde cada producto se clasifica dentro de una categoría principal.
+
+Esta decisión simplifica el diseño del modelo, reduce la complejidad de las consultas SQL y facilita la generación de reportes.
+
+Si en futuras versiones del sistema fuera necesario permitir múltiples categorías por producto, el modelo podrá evolucionar incorporando una entidad asociativa específica.
+
+#### Consecuencias
+
+* Relación uno a muchos entre Categoría y Producto.
+* Simplificación de consultas y reportes.
+* Modelo fácilmente extensible.
+
+---
+
+### MER-007 — Independencia de la entidad Categoría
+
+#### Contexto
+
+Se analizó si las categorías debían existir únicamente cuando tuvieran productos asociados o si debían administrarse como información independiente.
+
+#### Decisión
+
+Las categorías existirán independientemente de los productos.
+
+Podrán crearse, modificarse o mantenerse sin necesidad de tener productos asociados.
+
+#### Justificación
+
+Las categorías representan información organizativa del negocio y no dependen de la existencia inmediata de productos.
+
+Esta independencia permite preparar la estructura del catálogo antes de incorporar nuevos artículos.
+
+#### Consecuencias
+
+* Mayor flexibilidad administrativa.
+* Mejor separación entre datos maestros y datos operativos.
+* Facilita la planificación del catálogo de productos.
+
+---
+
+### MER-008 — Responsabilidad de la entidad Categoría
+
+#### Contexto
+
+Fue necesario definir el alcance funcional de la entidad.
+
+#### Decisión
+
+La entidad **Categoría** almacenará únicamente información descriptiva relacionada con la clasificación de productos.
+
+No contendrá información comercial, inventarios, precios ni estadísticas.
+
+#### Justificación
+
+Las entidades de catálogo deben representar únicamente criterios de clasificación reutilizables por el resto del sistema.
+
+#### Consecuencias
+
+* Se mantiene el principio de responsabilidad única.
+* Se evita incorporar información derivada.
+* Se facilita la reutilización de la entidad.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
 
 * MER-006
 * MER-007
+* MER-008
+
+---
+
+## 3.4 ENT-004 — Proveedor
+
+### Descripción
+
+La entidad **Proveedor** representa a toda organización habilitada para suministrar productos a TechStore S.A.
+
+Su finalidad es almacenar exclusivamente la información propia de los proveedores con los que la empresa mantiene relaciones comerciales para el abastecimiento de mercaderías.
+
+Esta entidad constituye uno de los datos maestros del sistema y será utilizada por los procesos de compras y abastecimiento.
+
+---
+
+### MER-009 — Relación entre Producto y Proveedor
+
+#### Contexto
+
+Durante el diseño del modelo fue necesario definir si cada producto podría ser suministrado por un único proveedor o por múltiples proveedores.
+
+#### Alternativas consideradas
+
+**Alternativa A**
+
+Establecer una relación uno a muchos entre **Proveedor** y **Producto**, donde cada producto tenga un único proveedor.
+
+**Alternativa B**
+
+Establecer una relación muchos a muchos entre **Producto** y **Proveedor**, resolviéndola mediante una entidad asociativa.
+
+#### Decisión
+
+Se adoptará la **Alternativa B**.
+
+Un mismo producto podrá ser suministrado por múltiples proveedores y un mismo proveedor podrá suministrar múltiples productos.
+
+La relación será materializada mediante una entidad asociativa denominada **ProductoProveedor**, que será incorporada durante el diseño detallado del MER.
+
+#### Justificación
+
+Este enfoque representa con mayor fidelidad el funcionamiento de un ERP comercial, permitiendo modelar distintos costos de compra, plazos de entrega, códigos de proveedor y demás características propias de la relación comercial.
+
+Además, respeta el principio de normalización al convertir una relación muchos a muchos en una entidad independiente.
+
+#### Consecuencias
+
+* El modelo será más flexible y escalable.
+* Se incorpora una nueva entidad asociativa al diseño lógico.
+* La relación entre Producto y Proveedor quedará completamente normalizada.
+
+---
+
+### MER-010 — Alcance de la entidad Proveedor
+
+#### Contexto
+
+Fue necesario definir con precisión el concepto representado por la entidad.
+
+#### Decisión
+
+La entidad **Proveedor** representará exclusivamente a las organizaciones que suministran productos a TechStore S.A.
+
+No representará fabricantes, transportistas, clientes ni otros actores del negocio.
+
+#### Justificación
+
+Cada entidad debe representar un único concepto del dominio.
+
+Mantener esta separación facilita el mantenimiento del modelo y evita ambigüedades en las relaciones.
+
+#### Consecuencias
+
+* Se preserva el principio de responsabilidad única.
+* El modelo resulta más claro y extensible.
+
+---
+
+### MER-011 — Responsabilidad de la entidad Proveedor
+
+#### Contexto
+
+Se definió el alcance de la información que será administrada por la entidad.
+
+#### Decisión
+
+La entidad **Proveedor** almacenará únicamente información descriptiva e identificatoria del proveedor.
+
+Información como compras realizadas, importes, productos adquiridos o estadísticas comerciales será administrada por las entidades transaccionales correspondientes.
+
+#### Justificación
+
+La información transaccional debe permanecer separada de los datos maestros para garantizar la consistencia del modelo y facilitar su evolución.
+
+#### Consecuencias
+
+* Se evita la duplicación de información.
+* Se mantiene la cohesión de la entidad.
+* Se favorece la normalización del modelo.
+
+---
+
+### Observación de arquitectura
+
+Como consecuencia de la decisión **MER-009**, durante el desarrollo del Modelo Entidad-Relación se incorporará una nueva entidad denominada **ProductoProveedor**.
+
+Esta entidad no forma parte del análisis funcional original, sino que surge durante el diseño lógico como resultado de la resolución de una relación de muchos a muchos.
+
+Su incorporación constituye una evolución natural del modelo y no representa una modificación del dominio del negocio.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
+
+* MER-009
+* MER-010
+* MER-011
