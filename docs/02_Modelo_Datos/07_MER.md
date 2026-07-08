@@ -1123,3 +1123,343 @@ Separar la dirección específica de la clasificación geográfica evita la dupl
 * MER-030
 * MER-031
 * MER-032
+
+---
+
+## 3.12 ENT-012 — Ciudad
+
+### Descripción
+
+La entidad **Ciudad** representa las localidades utilizadas para identificar la ubicación geográfica de las sucursales de TechStore S.A.
+
+Su finalidad es normalizar la información geográfica y evitar la duplicación de nombres de ciudades dentro del modelo de datos.
+
+Esta entidad constituye un catálogo geográfico y mantiene una relación jerárquica con la entidad **Provincia**.
+
+---
+
+### MER-033 — Normalización de la información geográfica
+
+#### Contexto
+
+Durante el diseño del modelo se evaluó cómo representar la información geográfica correspondiente a las sucursales.
+
+#### Decisión
+
+Los nombres de ciudades y provincias no serán almacenados como texto libre dentro de las entidades operativas.
+
+La información geográfica será administrada mediante las entidades **Ciudad** y **Provincia**.
+
+#### Justificación
+
+La utilización de entidades de catálogo evita inconsistencias de escritura, reduce la duplicación de información y facilita la generación de reportes geográficos.
+
+#### Consecuencias
+
+* Se mejora la calidad de los datos.
+* Se evita la duplicación de nombres geográficos.
+* Se facilita el análisis por ubicación.
+
+---
+
+### MER-034 — Relación entre Ciudad y Provincia
+
+#### Contexto
+
+Fue necesario establecer la jerarquía geográfica del modelo.
+
+#### Decisión
+
+Cada **Ciudad** pertenecerá a una única **Provincia**.
+
+Cada **Provincia** podrá contener múltiples ciudades.
+
+#### Justificación
+
+Esta estructura refleja la organización territorial utilizada por la empresa y permite reutilizar la información geográfica de forma consistente.
+
+#### Consecuencias
+
+* Se establece una relación jerárquica entre ambas entidades.
+* Se simplifican las consultas por provincia y ciudad.
+* Se preserva la normalización del modelo.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
+
+* MER-033
+* MER-034
+
+---
+
+## 3.13 ENT-013 — Provincia
+
+### Descripción
+
+La entidad **Provincia** representa las divisiones territoriales utilizadas para organizar la información geográfica del sistema.
+
+Su finalidad es proporcionar un catálogo reutilizable de provincias que permita estructurar las ciudades y facilitar el análisis territorial de las operaciones.
+
+Esta entidad constituye un catálogo geográfico de referencia.
+
+---
+
+### MER-035 — Alcance de la entidad Provincia
+
+#### Contexto
+
+Fue necesario definir el papel que desempeña la entidad Provincia dentro del modelo.
+
+#### Decisión
+
+La entidad **Provincia** representará exclusivamente las divisiones territoriales utilizadas por TechStore S.A.
+
+No administrará información de sucursales ni de ciudades, sino únicamente el catálogo de provincias.
+
+#### Justificación
+
+Cada entidad debe representar un único concepto del negocio.
+
+La separación entre provincias y ciudades facilita la reutilización de la información geográfica y evita redundancias.
+
+#### Consecuencias
+
+* Se preserva la responsabilidad única de la entidad.
+* Se simplifica la administración del catálogo geográfico.
+* Se mejora la consistencia del modelo.
+
+---
+
+### MER-036 — Independencia de la entidad Provincia
+
+#### Contexto
+
+Se evaluó si una provincia debía existir únicamente cuando tuviera ciudades asociadas.
+
+#### Decisión
+
+Las provincias podrán existir independientemente de la existencia de ciudades registradas.
+
+#### Justificación
+
+Los catálogos geográficos representan información estable que puede definirse previamente a la carga de datos operativos.
+
+#### Consecuencias
+
+* Se facilita la administración del catálogo.
+* Se mantiene la independencia entre datos maestros y datos operativos.
+* Se conserva la flexibilidad del modelo.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
+
+* MER-035
+* MER-036
+
+---
+
+## 3.14 ENT-014 — Forma de Pago
+
+### Descripción
+
+La entidad **Forma de Pago** representa los distintos medios mediante los cuales TechStore S.A. puede cancelar o cobrar una operación comercial.
+
+Su finalidad es proporcionar un catálogo reutilizable que pueda ser utilizado por los procesos de compra y venta para identificar el medio de pago utilizado en cada transacción.
+
+Esta entidad constituye un catálogo del sistema y representa información relativamente estable.
+
+---
+
+### MER-037 — Alcance de la entidad Forma de Pago
+
+#### Contexto
+
+Durante el diseño del modelo fue necesario definir qué concepto representa la entidad Forma de Pago.
+
+#### Decisión
+
+La entidad **Forma de Pago** representará exclusivamente un catálogo de medios de pago disponibles.
+
+No almacenará operaciones de pago, importes, fechas ni otra información transaccional.
+
+#### Justificación
+
+Los medios de pago constituyen información de referencia utilizada por distintos procesos del negocio.
+
+Separarlos de las transacciones permite reutilizar el catálogo y mantener el modelo normalizado.
+
+#### Consecuencias
+
+* Se preserva la responsabilidad única de la entidad.
+* Se evita la duplicación de información.
+* Se facilita la incorporación de nuevos medios de pago.
+
+---
+
+### MER-038 — Reutilización del catálogo de Formas de Pago
+
+#### Contexto
+
+Se evaluó si los procesos de compra y venta debían utilizar catálogos independientes de formas de pago.
+
+#### Decisión
+
+Los procesos de compra y venta compartirán una única entidad **Forma de Pago**.
+
+#### Justificación
+
+Los medios de pago representan el mismo concepto de negocio independientemente del tipo de operación comercial.
+
+Utilizar un único catálogo simplifica el mantenimiento y evita inconsistencias.
+
+#### Consecuencias
+
+* Un único catálogo será utilizado por múltiples procesos.
+* Se reduce la redundancia del modelo.
+* Se mejora la consistencia de la información.
+
+---
+
+### MER-039 — Independencia de la entidad Forma de Pago
+
+#### Contexto
+
+Se analizó si una forma de pago debía existir únicamente cuando hubiera sido utilizada en alguna operación.
+
+#### Decisión
+
+Las formas de pago podrán existir independientemente de las operaciones comerciales.
+
+#### Justificación
+
+La empresa puede definir nuevos medios de pago antes de comenzar a utilizarlos.
+
+Representar el catálogo como información independiente facilita la administración del sistema.
+
+#### Consecuencias
+
+* Se mantiene la independencia entre catálogos y transacciones.
+* Se facilita la administración de medios de pago.
+* Se conserva la flexibilidad del modelo.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
+
+* MER-037
+* MER-038
+* MER-039
+
+---
+
+## 3.15 ENT-015 — Movimiento de Stock
+
+### Descripción
+
+La entidad **Movimiento de Stock** representa cada una de las variaciones registradas en la existencia de un producto dentro de una sucursal de TechStore S.A.
+
+Su finalidad es mantener el historial de ingresos, egresos y ajustes de inventario, permitiendo reconstruir la evolución del stock a lo largo del tiempo.
+
+Esta entidad constituye una entidad transaccional del sistema y registra hechos relacionados con la gestión del inventario.
+
+---
+
+### MER-040 — Alcance de la entidad Movimiento de Stock
+
+#### Contexto
+
+Durante el diseño del modelo fue necesario definir qué concepto representa la entidad Movimiento de Stock.
+
+#### Decisión
+
+La entidad **Movimiento de Stock** registrará exclusivamente las variaciones producidas sobre las existencias de los productos.
+
+No almacenará el stock disponible de cada artículo.
+
+#### Justificación
+
+El stock disponible representa un estado derivado del conjunto de movimientos registrados.
+
+Separar el historial de movimientos del estado actual preserva la trazabilidad de las operaciones y mantiene la normalización del modelo.
+
+#### Consecuencias
+
+* Se conserva el historial completo del inventario.
+* El stock podrá calcularse a partir de los movimientos registrados o mantenerse mediante procesos específicos si el rendimiento lo requiere.
+* Se mejora la capacidad de auditoría del sistema.
+
+---
+
+### MER-041 — Origen de los movimientos de stock
+
+#### Contexto
+
+Se analizó qué procesos del negocio pueden generar movimientos de inventario.
+
+#### Decisión
+
+La entidad **Movimiento de Stock** podrá registrar movimientos originados por distintos procesos del negocio, como compras, ventas, ajustes de inventario, devoluciones u otras operaciones que impliquen una modificación de existencias.
+
+No dependerá exclusivamente de un único proceso transaccional.
+
+#### Justificación
+
+El inventario puede modificarse por múltiples causas.
+
+Representar el movimiento como un concepto independiente permite extender el sistema sin alterar la estructura del modelo.
+
+#### Consecuencias
+
+* La entidad podrá integrarse con nuevos procesos en el futuro.
+* Se favorece la extensibilidad del modelo.
+* Se mantiene una representación fiel de la realidad operativa.
+
+---
+
+### MER-042 — Relación del movimiento con la sucursal
+
+#### Contexto
+
+Fue necesario definir el ámbito físico en el que se producen las variaciones de inventario.
+
+#### Decisión
+
+Todo **Movimiento de Stock** estará asociado a una única **Sucursal**, indicando el establecimiento donde ocurrió la variación de existencias.
+
+#### Justificación
+
+Las existencias se administran por ubicación física.
+
+Registrar la sucursal asociada a cada movimiento permite controlar el inventario de manera independiente para cada establecimiento.
+
+#### Consecuencias
+
+* Se facilita el control de stock por sucursal.
+* Se mejora la trazabilidad de las operaciones.
+* El modelo soporta escenarios con múltiples establecimientos.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
+
+* MER-040
+* MER-041
+* MER-042
