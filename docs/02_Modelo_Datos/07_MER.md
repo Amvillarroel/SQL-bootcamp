@@ -424,3 +424,207 @@ Su incorporación constituye una evolución natural del modelo y no representa u
 * MER-009
 * MER-010
 * MER-011
+
+---
+
+## 3.5 ENT-005 — Compra
+
+### Descripción
+
+La entidad **Compra** representa el documento comercial mediante el cual TechStore S.A. registra la adquisición de productos a un proveedor.
+
+Su finalidad es almacenar la información general del documento de compra, independientemente del detalle de los productos incluidos en la operación.
+
+Esta entidad constituye una de las principales entidades transaccionales del sistema y será utilizada para registrar el abastecimiento de mercaderías.
+
+---
+
+### MER-012 — Modelo Cabecera–Detalle para las compras
+
+#### Contexto
+
+Durante el diseño del modelo fue necesario definir cómo representar una compra que puede incluir múltiples productos.
+
+#### Decisión
+
+La entidad **Compra** representará únicamente la cabecera del documento comercial.
+
+Los productos adquiridos, sus cantidades, precios y subtotales serán administrados mediante la entidad **Detalle de Compra**.
+
+#### Justificación
+
+Una compra constituye un documento que puede contener múltiples líneas de detalle.
+
+Separar la cabecera del detalle evita la duplicación de información y permite representar correctamente la relación entre el documento y los productos adquiridos.
+
+#### Consecuencias
+
+* Se adopta el patrón Cabecera–Detalle.
+* Cada compra podrá contener uno o varios productos.
+* Se preserva la normalización del modelo.
+
+---
+
+### MER-013 — Alcance de la entidad Compra
+
+#### Contexto
+
+Fue necesario establecer qué tipo de documento representará la entidad dentro del modelo.
+
+#### Decisión
+
+La entidad **Compra** representará el documento mediante el cual la empresa registra el ingreso de mercaderías provenientes de un proveedor.
+
+No modelará órdenes de compra, remitos u otros documentos del proceso de abastecimiento.
+
+#### Justificación
+
+El objetivo del Bootcamp es construir un modelo didáctico, manteniendo un equilibrio entre realismo y complejidad.
+
+Esta decisión permite simplificar el proceso de compras sin perder consistencia conceptual.
+
+#### Consecuencias
+
+* El modelo resulta más sencillo de comprender.
+* Se reduce la cantidad de entidades transaccionales.
+* El diseño podrá evolucionar en futuras versiones si se requiere un flujo documental más completo.
+
+---
+
+### MER-014 — Responsabilidad de la entidad Compra
+
+#### Contexto
+
+Se definió el alcance funcional de la información que almacenará la entidad.
+
+#### Decisión
+
+La entidad **Compra** almacenará únicamente la información general del documento comercial.
+
+La información correspondiente a los productos adquiridos será administrada por la entidad **Detalle de Compra**.
+
+#### Justificación
+
+Cada entidad debe representar un único concepto del negocio.
+
+La separación entre cabecera y detalle facilita el mantenimiento del modelo y evita redundancias.
+
+#### Consecuencias
+
+* Se mantiene la responsabilidad única de la entidad.
+* Se facilita la integridad de la información.
+* El modelo queda preparado para representar documentos con cualquier cantidad de líneas de detalle.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
+
+* MER-012
+* MER-013
+* MER-014
+
+---
+
+## 3.6 ENT-006 — Venta
+
+### Descripción
+
+La entidad **Venta** representa el documento comercial mediante el cual TechStore S.A. registra la comercialización de productos a un cliente.
+
+Su finalidad es almacenar la información general de la operación de venta, independientemente del detalle de los productos incluidos en la transacción.
+
+Esta entidad constituye una de las principales entidades transaccionales del sistema y será utilizada para registrar las operaciones comerciales realizadas por la empresa.
+
+---
+
+### MER-015 — Modelo Cabecera–Detalle para las ventas
+
+#### Contexto
+
+Durante el diseño del modelo fue necesario definir cómo representar una venta que puede incluir múltiples productos.
+
+#### Decisión
+
+La entidad **Venta** representará únicamente la cabecera del documento comercial.
+
+Los productos vendidos, sus cantidades, precios unitarios y subtotales serán administrados mediante la entidad **Detalle de Venta**.
+
+#### Justificación
+
+Una venta constituye un documento que puede contener múltiples líneas de detalle.
+
+Separar la cabecera del detalle evita redundancias, facilita la normalización y permite representar correctamente cualquier cantidad de productos dentro de una misma operación.
+
+#### Consecuencias
+
+* Se adopta el patrón Cabecera–Detalle.
+* Cada venta podrá contener uno o varios productos.
+* Se preserva la integridad y consistencia del modelo.
+
+---
+
+### MER-016 — Alcance de la entidad Venta
+
+#### Contexto
+
+Fue necesario establecer qué tipo de documento representará la entidad dentro del modelo.
+
+#### Decisión
+
+La entidad **Venta** representará el documento mediante el cual la empresa registra la salida de mercaderías hacia un cliente.
+
+No modelará presupuestos, pedidos, remitos, notas de crédito u otros documentos comerciales.
+
+#### Justificación
+
+El objetivo del Bootcamp es desarrollar un modelo didáctico que represente las operaciones esenciales del negocio sin incorporar procesos que excedan el alcance definido.
+
+Esta decisión mantiene un equilibrio entre simplicidad y realismo.
+
+#### Consecuencias
+
+* El modelo resulta más sencillo de comprender.
+* Se limita el alcance funcional de la entidad.
+* Se facilita una futura ampliación del sistema si el negocio lo requiere.
+
+---
+
+### MER-017 — Responsabilidad de la entidad Venta
+
+#### Contexto
+
+Se definió el alcance funcional de la información administrada por la entidad.
+
+#### Decisión
+
+La entidad **Venta** almacenará únicamente la información general del documento comercial.
+
+La información correspondiente a los productos vendidos será administrada por la entidad **Detalle de Venta**.
+
+#### Justificación
+
+Cada entidad debe representar un único concepto del negocio.
+
+La separación entre cabecera y detalle evita duplicar información y facilita el mantenimiento del modelo.
+
+#### Consecuencias
+
+* Se preserva la responsabilidad única de la entidad.
+* Se mejora la organización de la información.
+* El modelo queda preparado para representar ventas con cualquier cantidad de líneas de detalle.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
+
+* MER-015
+* MER-016
+* MER-017
