@@ -628,3 +628,498 @@ La separación entre cabecera y detalle evita duplicar información y facilita e
 * MER-015
 * MER-016
 * MER-017
+
+---
+
+## 3.7 ENT-007 — Detalle de Venta
+
+### Descripción
+
+La entidad **Detalle de Venta** representa cada una de las líneas que componen una venta realizada por TechStore S.A.
+
+Su finalidad es almacenar la información específica de cada producto vendido dentro de una operación comercial.
+
+Esta entidad constituye el complemento de la entidad **Venta**, implementando el patrón Cabecera–Detalle adoptado para los documentos transaccionales.
+
+---
+
+### MER-018 — Alcance de la entidad Detalle de Venta
+
+#### Contexto
+
+Durante el diseño del modelo fue necesario definir cómo representar individualmente cada producto incluido en una venta.
+
+#### Decisión
+
+Cada registro de la entidad **Detalle de Venta** representará una única línea del documento comercial.
+
+Cada línea corresponderá a un producto específico vendido dentro de una determinada venta.
+
+#### Justificación
+
+Una venta puede contener múltiples productos, cada uno con cantidades, precios y descuentos diferentes.
+
+Representar cada línea como un registro independiente permite modelar correctamente la operación comercial.
+
+#### Consecuencias
+
+* Una venta podrá tener múltiples líneas de detalle.
+* Cada detalle pertenecerá exclusivamente a una venta.
+* Se mantiene la normalización del modelo.
+
+---
+
+### MER-019 — Responsabilidad de la entidad Detalle de Venta
+
+#### Contexto
+
+Fue necesario establecer qué información será administrada por esta entidad.
+
+#### Decisión
+
+La entidad **Detalle de Venta** almacenará la información propia de cada línea de venta, incluyendo el producto comercializado, la cantidad vendida, el precio unitario aplicado, los descuentos correspondientes y el subtotal de la línea.
+
+#### Justificación
+
+Esta información pertenece al hecho comercial registrado y puede variar entre distintas ventas del mismo producto.
+
+Por ese motivo no debe almacenarse en la entidad **Producto**.
+
+#### Consecuencias
+
+* Se preserva la responsabilidad única de cada entidad.
+* Se registra el historial real de las operaciones comerciales.
+* Se facilita el análisis posterior de las ventas.
+
+---
+
+### MER-020 — Persistencia del subtotal
+
+#### Contexto
+
+Se evaluó si el subtotal de cada línea debía calcularse dinámicamente o almacenarse dentro del modelo.
+
+#### Decisión
+
+El subtotal será almacenado como parte de cada registro del **Detalle de Venta**.
+
+#### Justificación
+
+En sistemas comerciales reales el subtotal forma parte del comprobante emitido y puede verse afectado por descuentos, promociones, impuestos o reglas comerciales vigentes al momento de la venta.
+
+Persistir este valor garantiza la trazabilidad histórica de la operación.
+
+#### Consecuencias
+
+* Se conserva el valor exacto registrado en la transacción.
+* Se simplifica la emisión de comprobantes y reportes.
+* El modelo refleja con mayor fidelidad el funcionamiento de un ERP.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
+
+* MER-018
+* MER-019
+* MER-020
+
+---
+
+## 3.8 ENT-008 — Detalle de Compra
+
+### Descripción
+
+La entidad **Detalle de Compra** representa cada una de las líneas que componen una compra registrada por TechStore S.A.
+
+Su finalidad es almacenar la información específica de cada producto adquirido dentro de una operación de compra.
+
+Esta entidad constituye el complemento de la entidad **Compra**, implementando el patrón Cabecera–Detalle adoptado para los documentos transaccionales.
+
+---
+
+### MER-021 — Alcance de la entidad Detalle de Compra
+
+#### Contexto
+
+Durante el diseño del modelo fue necesario definir cómo representar individualmente cada producto incluido en una compra.
+
+#### Decisión
+
+Cada registro de la entidad **Detalle de Compra** representará una única línea del documento de compra.
+
+Cada línea corresponderá a un producto específico adquirido dentro de una determinada compra.
+
+#### Justificación
+
+Una compra puede contener múltiples productos, cada uno con cantidades y costos diferentes.
+
+Representar cada línea como un registro independiente permite modelar correctamente la operación comercial y mantener la integridad del modelo.
+
+#### Consecuencias
+
+* Una compra podrá contener múltiples líneas de detalle.
+* Cada detalle pertenecerá exclusivamente a una compra.
+* Se preserva la normalización del modelo.
+
+---
+
+### MER-022 — Responsabilidad de la entidad Detalle de Compra
+
+#### Contexto
+
+Fue necesario definir qué información será administrada por esta entidad.
+
+#### Decisión
+
+La entidad **Detalle de Compra** almacenará la información propia de cada línea de compra, incluyendo el producto adquirido, la cantidad comprada, el costo unitario aplicado, las bonificaciones o descuentos comerciales correspondientes y el subtotal de la línea.
+
+#### Justificación
+
+El costo de adquisición forma parte de la transacción comercial y puede variar entre distintas compras del mismo producto.
+
+Por ese motivo no debe almacenarse en la entidad **Producto**.
+
+#### Consecuencias
+
+* Se mantiene la responsabilidad única de la entidad.
+* Se conserva el historial real de costos de adquisición.
+* Se facilita el análisis posterior de las compras.
+
+---
+
+### MER-023 — Persistencia del subtotal
+
+#### Contexto
+
+Se evaluó si el subtotal de cada línea debía calcularse dinámicamente o almacenarse dentro del modelo.
+
+#### Decisión
+
+El subtotal será almacenado como parte de cada registro del **Detalle de Compra**.
+
+#### Justificación
+
+El subtotal forma parte del documento comercial registrado y puede verse afectado por bonificaciones, descuentos, impuestos o reglas comerciales vigentes al momento de la compra.
+
+Persistir este valor garantiza la trazabilidad histórica de la operación.
+
+#### Consecuencias
+
+* Se conserva el valor exacto registrado en la transacción.
+* Se simplifica la generación de reportes y comprobantes.
+* El modelo refleja con mayor fidelidad el funcionamiento de un ERP.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
+
+* MER-021
+* MER-022
+* MER-023
+
+---
+
+## 3.9 ENT-009 — Empleado
+
+### Descripción
+
+La entidad **Empleado** representa a cada una de las personas que forman parte de la estructura organizacional de TechStore S.A.
+
+Su finalidad es almacenar la información propia del personal de la empresa, permitiendo asociar empleados a distintos procesos del negocio, como ventas, compras, administración de productos y gestión de inventario.
+
+Esta entidad constituye un dato maestro del sistema y representa exclusivamente a los colaboradores internos de la organización.
+
+---
+
+### MER-024 — Alcance de la entidad Empleado
+
+#### Contexto
+
+Durante el diseño del modelo fue necesario definir qué concepto del negocio representa la entidad Empleado.
+
+#### Decisión
+
+La entidad **Empleado** representará únicamente a las personas que mantienen una relación laboral con TechStore S.A.
+
+No representará usuarios del sistema, clientes, proveedores ni otros actores externos.
+
+#### Justificación
+
+Cada entidad debe representar un único concepto del dominio.
+
+Separar el concepto de empleado del concepto de usuario o de otros participantes del negocio evita ambigüedades y facilita la evolución futura del sistema.
+
+#### Consecuencias
+
+* Se mantiene la responsabilidad única de la entidad.
+* El modelo podrá incorporar posteriormente una entidad de usuarios sin modificar la estructura de Empleado.
+* Se mejora la claridad conceptual del modelo.
+
+---
+
+### MER-025 — Relación del empleado con la estructura organizacional
+
+#### Contexto
+
+Fue necesario establecer cómo se integran los empleados dentro de la organización de la empresa.
+
+#### Decisión
+
+Cada empleado pertenecerá a una única **Sucursal** y a un único **Sector**.
+
+Estas relaciones permitirán identificar la ubicación organizacional del personal dentro de la empresa.
+
+#### Justificación
+
+La estructura organizacional constituye un elemento estable del negocio y facilita la asignación de responsabilidades, la generación de reportes y el análisis operativo.
+
+#### Consecuencias
+
+* Cada empleado estará asociado a una sucursal.
+* Cada empleado estará asociado a un sector.
+* Se simplifica el análisis organizacional de la empresa.
+
+---
+
+### MER-026 — Responsabilidad de la entidad Empleado
+
+#### Contexto
+
+Fue necesario delimitar la información que será administrada por la entidad.
+
+#### Decisión
+
+La entidad **Empleado** almacenará únicamente información propia del colaborador, como datos identificatorios, información de contacto, fecha de ingreso y estado laboral.
+
+No almacenará indicadores de desempeño, comisiones, ventas realizadas ni otra información derivada de procesos del negocio.
+
+#### Justificación
+
+La información transaccional debe permanecer separada de los datos maestros.
+
+Esto preserva la normalización y facilita la evolución del modelo.
+
+#### Consecuencias
+
+* Se evita la duplicación de información.
+* Se preserva la integridad del modelo.
+* Se facilita la reutilización de la entidad en distintos procesos.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
+
+* MER-024
+* MER-025
+* MER-026
+
+
+---
+
+## 3.10 ENT-010 — Sector
+
+### Descripción
+
+La entidad **Sector** representa las distintas áreas funcionales que conforman la estructura organizacional de TechStore S.A.
+
+Su finalidad es clasificar a los empleados según el área en la que desempeñan sus funciones, facilitando la organización interna y la generación de reportes administrativos.
+
+Esta entidad constituye un catálogo organizacional del sistema y representa información relativamente estable.
+
+---
+
+### MER-027 — Alcance de la entidad Sector
+
+#### Contexto
+
+Durante el diseño del modelo fue necesario definir el concepto representado por la entidad Sector.
+
+#### Decisión
+
+La entidad **Sector** representará exclusivamente una división funcional de la organización.
+
+No representará sucursales, oficinas, ubicaciones físicas ni otras estructuras administrativas.
+
+#### Justificación
+
+Los sectores constituyen una clasificación organizacional independiente de la ubicación física donde operan.
+
+Esta separación facilita la reutilización de la estructura organizacional en distintas sucursales y evita duplicar información.
+
+#### Consecuencias
+
+* Un mismo sector podrá existir en múltiples sucursales.
+* Se preserva la independencia entre la organización funcional y la estructura física.
+* El modelo resulta más flexible y reutilizable.
+
+---
+
+### MER-028 — Independencia de la entidad Sector
+
+#### Contexto
+
+Se analizó si un sector debía existir únicamente cuando tuviera empleados asignados.
+
+#### Decisión
+
+Los sectores podrán existir independientemente de la asignación de empleados.
+
+#### Justificación
+
+La estructura organizacional puede definirse antes de incorporar personal o reorganizar áreas existentes.
+
+Representar los sectores como entidades independientes refleja con mayor fidelidad el funcionamiento de una organización.
+
+#### Consecuencias
+
+* Se facilita la planificación organizacional.
+* Se evita condicionar la existencia del catálogo a los datos operativos.
+* Se mantiene la separación entre datos maestros y transacciones.
+
+---
+
+### MER-029 — Responsabilidad de la entidad Sector
+
+#### Contexto
+
+Fue necesario establecer el alcance funcional de la entidad.
+
+#### Decisión
+
+La entidad **Sector** almacenará únicamente información descriptiva relacionada con las áreas funcionales de la empresa.
+
+No administrará empleados, indicadores de desempeño ni información derivada de procesos organizacionales.
+
+#### Justificación
+
+Las entidades de catálogo deben representar criterios de clasificación reutilizables por el resto del modelo.
+
+#### Consecuencias
+
+* Se mantiene la responsabilidad única de la entidad.
+* Se evita la duplicación de información.
+* Se facilita la reutilización del catálogo en distintos procesos.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
+
+* MER-027
+* MER-028
+* MER-029
+
+---
+
+## 3.11 ENT-011 — Sucursal
+
+### Descripción
+
+La entidad **Sucursal** representa cada una de las unidades operativas mediante las cuales TechStore S.A. desarrolla sus actividades comerciales.
+
+Su finalidad es identificar el lugar donde se realizan las operaciones del negocio y organizar la información asociada a empleados, compras, ventas y movimientos de inventario.
+
+Esta entidad constituye un dato maestro del sistema y representa la estructura física y operativa de la empresa.
+
+---
+
+### MER-030 — Alcance de la entidad Sucursal
+
+#### Contexto
+
+Durante el diseño del modelo fue necesario definir qué concepto representa la entidad Sucursal dentro de la organización.
+
+#### Decisión
+
+La entidad **Sucursal** representará una unidad operativa de TechStore S.A.
+
+No representará únicamente un domicilio físico, sino el establecimiento donde se desarrollan las actividades comerciales de la empresa.
+
+#### Justificación
+
+Las operaciones del negocio se realizan en sucursales específicas.
+
+Representarlas como unidades operativas permite asociar correctamente empleados, documentos comerciales y movimientos de inventario.
+
+#### Consecuencias
+
+* Las operaciones podrán asociarse a una sucursal determinada.
+* Se facilita el análisis por establecimiento.
+* El modelo resulta más representativo de la realidad del negocio.
+
+---
+
+### MER-031 — Independencia de la entidad Sucursal
+
+#### Contexto
+
+Se evaluó si una sucursal debía existir únicamente cuando tuviera empleados, stock o movimientos registrados.
+
+#### Decisión
+
+Las sucursales podrán existir independientemente de la existencia de empleados o transacciones asociadas.
+
+#### Justificación
+
+Una empresa puede planificar nuevas sucursales antes de iniciar sus operaciones.
+
+Representarlas como entidades independientes refleja adecuadamente la evolución natural de la organización.
+
+#### Consecuencias
+
+* Se facilita la planificación del crecimiento de la empresa.
+* Se mantiene la independencia entre datos maestros y datos transaccionales.
+* El modelo conserva su flexibilidad.
+
+---
+
+### MER-032 — Relación de la entidad Sucursal con la ubicación geográfica
+
+#### Contexto
+
+Fue necesario establecer cómo representar la ubicación física de cada sucursal.
+
+#### Decisión
+
+Cada **Sucursal** estará asociada a una única **Ciudad**.
+
+La ciudad correspondiente determinará, a su vez, la provincia donde se encuentra ubicada.
+
+La dirección física será almacenada como un atributo propio de la sucursal, mientras que la información geográfica reutilizable será administrada mediante las entidades **Ciudad** y **Provincia**.
+
+#### Justificación
+
+Separar la dirección específica de la clasificación geográfica evita la duplicación de información y favorece la normalización del modelo.
+
+#### Consecuencias
+
+* Se reutiliza la información geográfica.
+* Se simplifican las consultas por ciudad o provincia.
+* Se evita almacenar repetidamente los mismos nombres geográficos.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
+
+* MER-030
+* MER-031
+* MER-032
