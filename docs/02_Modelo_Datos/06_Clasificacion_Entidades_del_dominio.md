@@ -146,7 +146,8 @@ Su incorporación dependerá del análisis realizado durante el diseño del MER.
 | ENT-013 | Provincia           | Catálogo      |
 | ENT-014 | Forma de Pago       | Catálogo      |
 | ENT-015 | Movimiento de Stock | Transaccional |
-| ENT-016 | Marca               | Catálogo |
+| ENT-016 | Marca               | Catálogo      |
+| ENT-017 | Movimiento de Stock | Catálogo      |
 
 ---
 

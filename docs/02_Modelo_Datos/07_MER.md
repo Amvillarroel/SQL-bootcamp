@@ -1567,3 +1567,105 @@ Representar la marca como una entidad independiente facilita la administración 
 * MER-043
 * MER-044
 * MER-045
+
+---
+
+## 3.17 ENT-017 — Tipo de Movimiento de Stock
+
+### Descripción
+
+La entidad **Tipo de Movimiento de Stock** representa las distintas clases de operaciones que pueden generar una variación en las existencias de los productos dentro de TechStore S.A.
+
+Su finalidad es proporcionar un catálogo reutilizable que permita clasificar cada movimiento de inventario según su origen y comportamiento operativo.
+
+Esta entidad constituye un catálogo del sistema y será utilizada por la entidad **Movimiento de Stock**.
+
+---
+
+### MER-046 — Incorporación de la entidad Tipo de Movimiento de Stock
+
+#### Contexto
+
+Durante la revisión arquitectónica del MER se identificó que la entidad **Movimiento de Stock** podía originarse por distintos procesos del negocio, como compras, ventas, ajustes, devoluciones o inventarios.
+
+Resultó necesario establecer un mecanismo uniforme para clasificar dichos movimientos.
+
+#### Decisión
+
+Se incorporará la entidad **Tipo de Movimiento de Stock** como un catálogo reutilizable.
+
+Cada **Movimiento de Stock** estará asociado a un único **Tipo de Movimiento de Stock**.
+
+Un mismo **Tipo de Movimiento de Stock** podrá ser utilizado por múltiples movimientos.
+
+#### Justificación
+
+Representar los tipos de movimiento mediante una entidad independiente evita el uso de valores codificados o texto libre, mejora la consistencia del modelo y facilita la incorporación de nuevos tipos de operación sin modificar la estructura de la base de datos.
+
+#### Consecuencias
+
+* Se mejora la normalización del modelo.
+* Se facilita la clasificación de los movimientos de inventario.
+* El sistema podrá evolucionar incorporando nuevos tipos de movimiento sin cambios estructurales.
+
+---
+
+### MER-047 — Alcance de la entidad Tipo de Movimiento de Stock
+
+#### Contexto
+
+Fue necesario definir qué información corresponde almacenar en esta entidad.
+
+#### Decisión
+
+La entidad **Tipo de Movimiento de Stock** almacenará únicamente información propia de cada tipo de movimiento.
+
+No registrará movimientos individuales ni información transaccional del inventario.
+
+#### Justificación
+
+Cada entidad debe representar un único concepto del negocio.
+
+Los movimientos concretos constituyen hechos operativos y serán registrados exclusivamente por la entidad **Movimiento de Stock**.
+
+#### Consecuencias
+
+* Se preserva la responsabilidad única de la entidad.
+* Se evita la duplicación de información.
+* Se facilita el mantenimiento del catálogo.
+
+---
+
+### MER-048 — Independencia de la entidad Tipo de Movimiento de Stock
+
+#### Contexto
+
+Se analizó si un tipo de movimiento debía existir únicamente cuando hubiera movimientos asociados.
+
+#### Decisión
+
+Los tipos de movimiento podrán existir independientemente de la existencia de movimientos registrados.
+
+#### Justificación
+
+La empresa puede definir previamente las clases de movimientos admitidas por el sistema antes de registrar operaciones de inventario.
+
+Mantener el catálogo independiente simplifica la administración y conserva la coherencia con el resto de las entidades de referencia.
+
+#### Consecuencias
+
+* Se mantiene la independencia entre catálogos y entidades transaccionales.
+* Se facilita la incorporación de nuevos procesos logísticos.
+* Se mejora la flexibilidad del modelo.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
+
+* MER-046
+* MER-047
+* MER-048
