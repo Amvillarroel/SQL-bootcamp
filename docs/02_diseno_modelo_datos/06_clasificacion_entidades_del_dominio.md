@@ -131,23 +131,23 @@ Su incorporación dependerá del análisis realizado durante el diseño del MER.
 
 | Código  | Entidad             | Clasificación |
 | ------- | ------------------- | ------------- |
-| ENT-001 | Cliente             | Maestra       |
-| ENT-002 | Producto            | Maestra       |
-| ENT-003 | Categoría           | Catálogo      |
-| ENT-004 | Proveedor           | Maestra       |
-| ENT-005 | Compra              | Transaccional |
-| ENT-006 | Venta               | Transaccional |
-| ENT-007 | Detalle de Venta    | Detalle       |
-| ENT-008 | Detalle de Compra   | Detalle       |
-| ENT-009 | Empleado            | Maestra       |
-| ENT-010 | Sector              | Catálogo      |
-| ENT-011 | Sucursal            | Maestra       |
-| ENT-012 | Ciudad              | Catálogo      |
-| ENT-013 | Provincia           | Catálogo      |
-| ENT-014 | Forma de Pago       | Catálogo      |
-| ENT-015 | Movimiento de Stock | Transaccional |
-| ENT-016 | Marca               | Catálogo      |
-| ENT-017 | Movimiento de Stock | Catálogo      |
+| ENT-001 | Cliente                     | Maestra       |
+| ENT-002 | Producto                    | Maestra       |
+| ENT-003 | Categoría                   | Catálogo      |
+| ENT-004 | Proveedor                   | Maestra       |
+| ENT-005 | Compra                      | Transaccional |
+| ENT-006 | Venta                       | Transaccional |
+| ENT-007 | Detalle de Venta            | Detalle       |
+| ENT-008 | Detalle de Compra           | Detalle       |
+| ENT-009 | Empleado                    | Maestra       |
+| ENT-010 | Sector                      | Catálogo      |
+| ENT-011 | Sucursal                    | Maestra       |
+| ENT-012 | Ciudad                      | Catálogo      |
+| ENT-013 | Provincia                   | Catálogo      |
+| ENT-014 | Forma de Pago               | Catálogo      |
+| ENT-015 | Movimiento de Stock         | Transaccional |
+| ENT-016 | Marca                       | Catálogo      |
+| ENT-017 | Tipo Movimiento de Stock    | Catálogo      |
 
 ---
 
