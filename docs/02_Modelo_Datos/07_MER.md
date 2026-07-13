@@ -1463,3 +1463,107 @@ Registrar la sucursal asociada a cada movimiento permite controlar el inventario
 * MER-040
 * MER-041
 * MER-042
+
+---
+
+## 3.16 ENT-016 — Marca
+
+### Descripción
+
+La entidad **Marca** representa los fabricantes o marcas comerciales asociadas a los productos comercializados por TechStore S.A.
+
+Su finalidad es normalizar la información de las marcas, evitando su almacenamiento como texto libre y permitiendo realizar consultas, reportes y análisis comerciales basados en este criterio de clasificación.
+
+Esta entidad constituye un catálogo reutilizable del sistema.
+
+---
+
+### MER-043 — Incorporación de la entidad Marca
+
+#### Contexto
+
+Durante la revisión arquitectónica del MER se identificó que los productos comercializados pertenecen naturalmente a una marca comercial.
+
+Inicialmente esta información no había sido modelada como una entidad independiente.
+
+#### Decisión
+
+Se incorporará la entidad **Marca** como un catálogo del sistema.
+
+Cada **Producto** estará asociado a una única **Marca**.
+
+Una **Marca** podrá estar asociada a múltiples productos.
+
+#### Justificación
+
+La marca constituye un concepto propio del negocio y posee identidad independiente de los productos que representa.
+
+Modelarla como una entidad de catálogo evita inconsistencias de escritura, facilita la administración de la información y permite reutilizar el mismo registro en múltiples productos.
+
+#### Consecuencias
+
+* Se elimina la duplicación de nombres de marcas.
+* Se facilita la generación de reportes comerciales por marca.
+* Se mejora la normalización del modelo.
+
+---
+
+### MER-044 — Alcance de la entidad Marca
+
+#### Contexto
+
+Fue necesario definir qué información corresponde almacenar en la entidad Marca.
+
+#### Decisión
+
+La entidad **Marca** almacenará únicamente información propia de la marca comercial.
+
+No almacenará productos, precios, proveedores, ventas ni otra información derivada de procesos comerciales.
+
+#### Justificación
+
+Cada entidad debe representar un único concepto del negocio.
+
+Los productos comercializados constituyen una entidad independiente que mantiene una relación con la marca, pero no forman parte de ella.
+
+#### Consecuencias
+
+* Se preserva el principio de responsabilidad única.
+* Se reduce el acoplamiento entre entidades.
+* Se facilita la evolución futura del modelo.
+
+---
+
+### MER-045 — Independencia de la entidad Marca
+
+#### Contexto
+
+Se evaluó si una marca debía existir únicamente cuando tuviera productos asociados.
+
+#### Decisión
+
+Las marcas podrán existir independientemente de la existencia de productos registrados.
+
+#### Justificación
+
+La empresa puede incorporar nuevas marcas a su catálogo antes de comercializar productos asociados a ellas.
+
+Representar la marca como una entidad independiente facilita la administración del catálogo y mantiene la coherencia con el resto de las entidades de referencia del sistema.
+
+#### Consecuencias
+
+* Se mantiene la independencia entre catálogos y entidades operativas.
+* Se facilita la incorporación de nuevas líneas de productos.
+* Se conserva la flexibilidad del modelo.
+
+---
+
+### Estado de la entidad
+
+**Estado:** Aprobada.
+
+**Decisiones aprobadas:**
+
+* MER-043
+* MER-044
+* MER-045
