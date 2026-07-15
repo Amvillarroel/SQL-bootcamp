@@ -161,7 +161,9 @@ Se identificó la necesidad de delimitar qué tipo de información pertenece nat
 
 #### Decisión
 
-La entidad **Producto** almacenará únicamente información descriptiva del artículo comercial.
+La entidad **Producto** almacenará únicamente información propia y permanente del artículo comercial.
+
+Entre dicha información se incluyen sus características descriptivas, comerciales y tributarias, como la marca, la categoría y la alícuota de IVA vigente.
 
 Información como existencias, precios históricos, compras, ventas o movimientos de inventario será administrada por las entidades correspondientes.
 
@@ -717,6 +719,44 @@ Persistir este valor garantiza la trazabilidad histórica de la operación.
 
 ---
 
+### MER-026 — Conservación de la alícuota aplicada en las ventas
+
+#### Contexto
+
+La alícuota de IVA vigente de un producto puede modificarse como consecuencia de cambios en la normativa tributaria.
+
+Era necesario decidir si las ventas debían consultar siempre la alícuota vigente del producto o conservar la utilizada al momento de la operación.
+
+#### Alternativas consideradas
+
+**Alternativa A**
+
+Obtener la alícuota directamente desde la entidad **Producto** cada vez que se consulte una venta.
+
+**Alternativa B**
+
+Conservar en cada registro de **DetalleVenta** la alícuota efectivamente aplicada durante la operación.
+
+#### Decisión
+
+Se adoptará la **Alternativa B**.
+
+Cada línea de venta conservará la alícuota utilizada al momento de registrar la operación.
+
+#### Justificación
+
+Las ventas constituyen hechos históricos del negocio.
+
+Una modificación posterior de la alícuota vigente de un producto no debe alterar la información registrada en operaciones anteriores.
+
+#### Consecuencias
+
+* Se preserva el historial tributario de las ventas.
+* Los comprobantes históricos permanecerán inalterables.
+* El modelo mantiene consistencia frente a cambios normativos.
+
+---
+
 ### Estado de la entidad
 
 **Estado:** Aprobada.
@@ -824,6 +864,43 @@ Persistir este valor garantiza la trazabilidad histórica de la operación.
 * MER-021
 * MER-022
 * MER-023
+
+---
+### MER-027 — Conservación de la alícuota aplicada en las compras
+
+#### Contexto
+
+La alícuota de IVA vigente de un producto puede modificarse como consecuencia de cambios en la normativa tributaria.
+
+Era necesario decidir si las compras debían consultar siempre la alícuota vigente del producto o conservar la utilizada al momento de la operación.
+
+#### Alternativas consideradas
+
+**Alternativa A**
+
+Obtener la alícuota directamente desde la entidad **Producto** cada vez que se consulte una compra.
+
+**Alternativa B**
+
+Conservar en cada registro de **DetalleCompra** la alícuota efectivamente aplicada durante la operación.
+
+#### Decisión
+
+Se adoptará la **Alternativa B**.
+
+Cada línea de compra conservará la alícuota utilizada al momento de registrar la operación.
+
+#### Justificación
+
+Las compras constituyen hechos históricos del negocio.
+
+Una modificación posterior de la alícuota vigente de un producto no debe alterar la información registrada en operaciones anteriores.
+
+#### Consecuencias
+
+* Se preserva el historial tributario de las compras.
+* Los comprobantes históricos permanecerán inalterables.
+* El modelo mantiene consistencia frente a cambios normativos.
 
 ---
 
@@ -1669,3 +1746,57 @@ Mantener el catálogo independiente simplifica la administración y conserva la 
 * MER-046
 * MER-047
 * MER-048
+
+## 3.18 ENT-018 — Alícuota IVA
+
+### Descripción
+
+La entidad **Alícuota IVA** representa el conjunto de alícuotas del Impuesto al Valor Agregado que pueden ser aplicadas a los productos comercializados por TechStore S.A.
+
+Su finalidad es centralizar la administración de las distintas tasas impositivas permitidas por la normativa vigente, evitando valores repetidos y garantizando la consistencia del modelo.
+
+Las alícuotas constituyen información de referencia estable y forman parte de las entidades de catálogo del dominio.
+
+---
+
+### MER-025 — Modelado de la entidad Alícuota IVA
+
+#### Contexto
+
+Durante el desarrollo del diseño lógico se identificó la necesidad de representar explícitamente las distintas alícuotas de IVA aplicables a los productos.
+
+Inicialmente se evaluó almacenar el porcentaje directamente como un atributo del producto, pero esta alternativa dificultaba el control del dominio permitido y favorecía la aparición de valores inconsistentes.
+
+#### Alternativas consideradas
+
+**Alternativa A**
+
+Almacenar el porcentaje de IVA como un atributo libre dentro de la entidad **Producto**.
+
+**Alternativa B**
+
+Crear una entidad de catálogo denominada **Alícuota IVA**, referenciada por la entidad **Producto**.
+
+#### Decisión
+
+Se adoptará la **Alternativa B**.
+
+Las distintas alícuotas de IVA serán administradas mediante una entidad de catálogo independiente.
+
+Cada producto hará referencia a una única alícuota vigente.
+
+#### Justificación
+
+Las alícuotas de IVA representan un conjunto reducido, conocido y controlado de valores definidos por la normativa tributaria.
+
+Centralizar su administración evita duplicación de información, garantiza la integridad del dominio y facilita futuras modificaciones legales.
+
+Asimismo, esta decisión permite reutilizar la misma información en distintos procesos del sistema sin replicar datos.
+
+#### Consecuencias
+
+* Se incorpora una nueva entidad de catálogo al modelo.
+* La entidad **Producto** hará referencia a **Alícuota IVA**.
+* Se garantiza la consistencia de las alícuotas utilizadas por los productos.
+* El modelo podrá adaptarse fácilmente ante futuras modificaciones de la normativa tributaria.
+

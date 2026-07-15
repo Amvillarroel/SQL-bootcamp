@@ -148,6 +148,8 @@ Su incorporación dependerá del análisis realizado durante el diseño del MER.
 | ENT-015 | Movimiento de Stock         | Transaccional |
 | ENT-016 | Marca                       | Catálogo      |
 | ENT-017 | Tipo Movimiento de Stock    | Catálogo      |
+| ENT-018 | Alícuota IVA                | Catálogo      |
+
 
 ---
 
