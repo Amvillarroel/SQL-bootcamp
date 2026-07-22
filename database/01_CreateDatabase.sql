@@ -1,22 +1,26 @@
+```sql
 /*
 =========================================================
 Proyecto : TechStore S.A.
 Archivo  : 01_CreateDatabase.sql
 Autor    : Bootcamp SQL
-Motor    : SQLite
+Motor    : MySQL
 =========================================================
 
 Objetivo:
-Inicializar la configuración de la base de datos antes
-de crear las tablas del sistema.
-
-En SQLite la base de datos corresponde al archivo
-techstore.db, por lo que no existe una sentencia
-CREATE DATABASE como en otros motores SQL.
+Crear la base de datos del proyecto y seleccionar el
+esquema que será utilizado durante el desarrollo del
+Bootcamp.
 */
 
--- Habilita el control de claves foráneas.
-PRAGMA foreign_keys = ON;
+-- Elimina la base de datos si ya existe.
+DROP DATABASE IF EXISTS TechStore;
 
--- Verifica que la configuración haya sido aplicada.
-PRAGMA foreign_keys;
+-- Crea la base de datos.
+CREATE DATABASE TechStore
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
+-- Selecciona la base de datos para trabajar.
+USE TechStore;
+```
