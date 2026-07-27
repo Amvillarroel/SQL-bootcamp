@@ -203,3 +203,81 @@ CREATE TABLE AlicuotaIVA
     CONSTRAINT UQ_AlicuotaIVA_Porcentaje
         UNIQUE (Porcentaje)
 );
+
+/*
+=========================================================
+TABLA: Sucursal
+Descripción:
+Almacena las sucursales de la empresa.
+
+Cada sucursal pertenece a una única ciudad.
+=========================================================
+*/
+
+CREATE TABLE Sucursal
+(
+    SucursalId INT AUTO_INCREMENT,
+
+    CiudadId INT NOT NULL,
+
+    Nombre VARCHAR(100) NOT NULL,
+
+    Direccion VARCHAR(200) NOT NULL,
+
+    Telefono VARCHAR(30),
+
+    CONSTRAINT PK_Sucursal
+        PRIMARY KEY (SucursalId),
+
+    CONSTRAINT FK_Sucursal_Ciudad
+        FOREIGN KEY (CiudadId)
+        REFERENCES Ciudad (CiudadId),
+
+    CONSTRAINT UQ_Sucursal_Nombre
+        UNIQUE (Nombre)
+);
+
+/*
+=========================================================
+TABLA: Empleado
+Descripción:
+Almacena los empleados de la empresa.
+
+Cada empleado pertenece a una sucursal y a un sector.
+=========================================================
+*/
+
+CREATE TABLE Empleado
+(
+    EmpleadoId INT AUTO_INCREMENT,
+
+    SucursalId INT NOT NULL,
+
+    SectorId INT NOT NULL,
+
+    Nombre VARCHAR(100) NOT NULL,
+
+    Apellido VARCHAR(100) NOT NULL,
+
+    Documento VARCHAR(20) NOT NULL,
+
+    Email VARCHAR(150),
+
+    Telefono VARCHAR(30),
+
+    Activo BOOLEAN NOT NULL DEFAULT TRUE,
+
+    CONSTRAINT PK_Empleado
+        PRIMARY KEY (EmpleadoId),
+
+    CONSTRAINT FK_Empleado_Sucursal
+        FOREIGN KEY (SucursalId)
+        REFERENCES Sucursal (SucursalId),
+
+    CONSTRAINT FK_Empleado_Sector
+        FOREIGN KEY (SectorId)
+        REFERENCES Sector (SectorId),
+
+    CONSTRAINT UQ_Empleado_Documento
+        UNIQUE (Documento)
+);
