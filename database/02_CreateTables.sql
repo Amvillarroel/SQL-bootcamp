@@ -281,3 +281,152 @@ CREATE TABLE Empleado
     CONSTRAINT UQ_Empleado_Documento
         UNIQUE (Documento)
 );
+
+/*
+=========================================================
+TABLA: Cliente
+Descripción:
+Almacena la información de los clientes de la empresa.
+
+Un cliente puede ser una persona física o una persona
+jurídica.
+=========================================================
+*/
+
+CREATE TABLE Cliente
+(
+    ClienteId INT AUTO_INCREMENT,
+
+    CiudadId INT NOT NULL,
+
+    TipoCliente ENUM('FISICA', 'JURIDICA') NOT NULL,
+
+    Nombre VARCHAR(100) NOT NULL,
+
+    Apellido VARCHAR(100),
+
+    RazonSocial VARCHAR(150),
+
+    Documento VARCHAR(20),
+
+    CUIT VARCHAR(20),
+
+    Email VARCHAR(150),
+
+    Telefono VARCHAR(30),
+
+    Direccion VARCHAR(200),
+
+    Activo BOOLEAN NOT NULL DEFAULT TRUE,
+
+    CONSTRAINT PK_Cliente
+        PRIMARY KEY (ClienteId),
+
+    CONSTRAINT FK_Cliente_Ciudad
+        FOREIGN KEY (CiudadId)
+        REFERENCES Ciudad (CiudadId),
+
+    CONSTRAINT UQ_Cliente_Documento
+        UNIQUE (Documento),
+
+    CONSTRAINT UQ_Cliente_CUIT
+        UNIQUE (CUIT)
+);
+
+/*
+=========================================================
+TABLA: Proveedor
+Descripción:
+Almacena la información de los proveedores de la empresa.
+
+Cada proveedor corresponde a una empresa o razón social.
+=========================================================
+*/
+
+CREATE TABLE Proveedor
+(
+    ProveedorId INT AUTO_INCREMENT,
+
+    CiudadId INT NOT NULL,
+
+    RazonSocial VARCHAR(150) NOT NULL,
+
+    NombreFantasia VARCHAR(150),
+
+    CUIT VARCHAR(20) NOT NULL,
+
+    Email VARCHAR(150),
+
+    Telefono VARCHAR(30),
+
+    Direccion VARCHAR(200),
+
+    Activo BOOLEAN NOT NULL DEFAULT TRUE,
+
+    CONSTRAINT PK_Proveedor
+        PRIMARY KEY (ProveedorId),
+
+    CONSTRAINT FK_Proveedor_Ciudad
+        FOREIGN KEY (CiudadId)
+        REFERENCES Ciudad (CiudadId),
+
+    CONSTRAINT UQ_Proveedor_RazonSocial
+        UNIQUE (RazonSocial),
+
+    CONSTRAINT UQ_Proveedor_CUIT
+        UNIQUE (CUIT)
+);
+
+/*
+=========================================================
+TABLA: Producto
+Descripción:
+Almacena los productos comercializados por la empresa.
+
+Cada producto pertenece a una categoría, una marca y una
+alícuota de IVA.
+=========================================================
+*/
+
+CREATE TABLE Producto
+(
+    ProductoId INT AUTO_INCREMENT,
+
+    CategoriaId INT NOT NULL,
+
+    MarcaId INT NOT NULL,
+
+    AlicuotaIVAId INT NOT NULL,
+
+    Nombre VARCHAR(150) NOT NULL,
+
+    Descripcion VARCHAR(500),
+
+    CodigoBarras VARCHAR(50),
+
+    PrecioCosto DECIMAL(12,2) NOT NULL,
+
+    PrecioVenta DECIMAL(12,2) NOT NULL,
+
+    StockMinimo INT NOT NULL DEFAULT 0,
+
+    Activo BOOLEAN NOT NULL DEFAULT TRUE,
+
+    CONSTRAINT PK_Producto
+        PRIMARY KEY (ProductoId),
+
+    CONSTRAINT FK_Producto_Categoria
+        FOREIGN KEY (CategoriaId)
+        REFERENCES Categoria (CategoriaId),
+
+    CONSTRAINT FK_Producto_Marca
+        FOREIGN KEY (MarcaId)
+        REFERENCES Marca (MarcaId),
+
+    CONSTRAINT FK_Producto_AlicuotaIVA
+        FOREIGN KEY (AlicuotaIVAId)
+        REFERENCES AlicuotaIVA (AlicuotaIVAId),
+
+    CONSTRAINT UQ_Producto_CodigoBarras
+        UNIQUE (CodigoBarras)
+);
