@@ -430,3 +430,131 @@ CREATE TABLE Producto
     CONSTRAINT UQ_Producto_CodigoBarras
         UNIQUE (CodigoBarras)
 );
+
+/*
+=========================================================
+TABLA: Compra
+Descripción:
+Almacena el encabezado de las compras realizadas a los
+proveedores.
+
+Los productos adquiridos se registran en la tabla
+DetalleCompra.
+=========================================================
+*/
+
+CREATE TABLE Compra
+(
+    CompraId INT AUTO_INCREMENT,
+
+    ProveedorId INT NOT NULL,
+
+    EmpleadoId INT NOT NULL,
+
+    FormaPagoId INT NOT NULL,
+
+    Fecha DATETIME NOT NULL,
+
+    NumeroComprobante VARCHAR(30) NOT NULL,
+
+    Observaciones VARCHAR(500),
+
+    CONSTRAINT PK_Compra
+        PRIMARY KEY (CompraId),
+
+    CONSTRAINT FK_Compra_Proveedor
+        FOREIGN KEY (ProveedorId)
+        REFERENCES Proveedor (ProveedorId),
+
+    CONSTRAINT FK_Compra_Empleado
+        FOREIGN KEY (EmpleadoId)
+        REFERENCES Empleado (EmpleadoId),
+
+    CONSTRAINT FK_Compra_FormaPago
+        FOREIGN KEY (FormaPagoId)
+        REFERENCES FormaPago (FormaPagoId),
+
+    CONSTRAINT UQ_Compra_NumeroComprobante
+        UNIQUE (NumeroComprobante)
+);
+
+/*
+=========================================================
+TABLA: Venta
+Descripción:
+Almacena el encabezado de las ventas realizadas a los
+clientes.
+
+Los productos vendidos se registran en la tabla
+DetalleVenta.
+=========================================================
+*/
+
+CREATE TABLE Venta
+(
+    VentaId INT AUTO_INCREMENT,
+
+    ClienteId INT NOT NULL,
+
+    EmpleadoId INT NOT NULL,
+
+    FormaPagoId INT NOT NULL,
+
+    Fecha DATETIME NOT NULL,
+
+    NumeroComprobante VARCHAR(30) NOT NULL,
+
+    Observaciones VARCHAR(500),
+
+    CONSTRAINT PK_Venta
+        PRIMARY KEY (VentaId),
+
+    CONSTRAINT FK_Venta_Cliente
+        FOREIGN KEY (ClienteId)
+        REFERENCES Cliente (ClienteId),
+
+    CONSTRAINT FK_Venta_Empleado
+        FOREIGN KEY (EmpleadoId)
+        REFERENCES Empleado (EmpleadoId),
+
+    CONSTRAINT FK_Venta_FormaPago
+        FOREIGN KEY (FormaPagoId)
+        REFERENCES FormaPago (FormaPagoId),
+
+    CONSTRAINT UQ_Venta_NumeroComprobante
+        UNIQUE (NumeroComprobante)
+);
+
+/*
+=========================================================
+TABLA: DetalleCompra
+Descripción:
+Almacena los productos incluidos en cada compra.
+
+Cada registro representa una línea del comprobante.
+=========================================================
+*/
+
+CREATE TABLE DetalleCompra
+(
+    DetalleCompraId INT AUTO_INCREMENT,
+
+    CompraId INT NOT NULL,
+
+    ProductoId INT NOT NULL,
+
+    Cantidad DECIMAL(10,2) NOT NULL,
+
+    PrecioUnitario DECIMAL(12,2) NOT NULL,
+
+    CONSTRAINT PK_DetalleCompra
+        PRIMARY KEY (DetalleCompraId),
+
+    CONSTRAINT FK_DetalleCompra_Compra
+        FOREIGN KEY (CompraId)
+        REFERENCES Compra (CompraId),
+
+    CONSTRAINT FK_DetalleCompra_Producto
+        FOREIGN KEY (ProductoId)
+        REFERENCES Producto (ProductoId)
+);
