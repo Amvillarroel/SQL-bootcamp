@@ -558,3 +558,100 @@ CREATE TABLE DetalleCompra
         FOREIGN KEY (ProductoId)
         REFERENCES Producto (ProductoId)
 );
+
+/*
+=========================================================
+TABLA: DetalleVenta
+Descripción:
+Almacena los productos incluidos en cada venta.
+
+Cada registro representa una línea del comprobante.
+=========================================================
+*/
+
+CREATE TABLE DetalleVenta
+(
+    DetalleVentaId INT AUTO_INCREMENT,
+
+    VentaId INT NOT NULL,
+
+    ProductoId INT NOT NULL,
+
+    Cantidad DECIMAL(10,2) NOT NULL,
+
+    PrecioUnitario DECIMAL(12,2) NOT NULL,
+
+    CONSTRAINT PK_DetalleVenta
+        PRIMARY KEY (DetalleVentaId),
+
+    CONSTRAINT FK_DetalleVenta_Venta
+        FOREIGN KEY (VentaId)
+        REFERENCES Venta (VentaId),
+
+    CONSTRAINT FK_DetalleVenta_Producto
+        FOREIGN KEY (ProductoId)
+        REFERENCES Producto (ProductoId),
+
+    CONSTRAINT UQ_DetalleVenta_Venta_Producto
+        UNIQUE (VentaId, ProductoId)
+);
+
+/*
+=========================================================
+TABLA: MovimientoStock
+Descripción:
+Registra todos los movimientos de inventario realizados
+sobre los productos.
+
+Cada movimiento representa una entrada o una salida de
+stock y puede originarse por una compra, una venta o un
+ajuste manual.
+=========================================================
+*/
+
+CREATE TABLE MovimientoStock
+(
+    MovimientoStockId INT AUTO_INCREMENT,
+
+    ProductoId INT NOT NULL,
+
+    TipoMovimientoStockId INT NOT NULL,
+
+    EmpleadoId INT NOT NULL,
+
+    CompraId INT,
+
+    VentaId INT,
+
+    Fecha DATETIME NOT NULL,
+
+    Cantidad DECIMAL(10,2) NOT NULL,
+
+    Observaciones VARCHAR(500),
+
+    CONSTRAINT PK_MovimientoStock
+        PRIMARY KEY (MovimientoStockId),
+
+    CONSTRAINT FK_MovimientoStock_Producto
+        FOREIGN KEY (ProductoId)
+        REFERENCES Producto (ProductoId),
+
+    CONSTRAINT FK_MovimientoStock_TipoMovimiento
+        FOREIGN KEY (TipoMovimientoStockId)
+        REFERENCES TipoMovimientoStock (TipoMovimientoStockId),
+
+    CONSTRAINT FK_MovimientoStock_Empleado
+        FOREIGN KEY (EmpleadoId)
+        REFERENCES Empleado (EmpleadoId),
+
+    CONSTRAINT FK_MovimientoStock_Compra
+        FOREIGN KEY (CompraId)
+        REFERENCES Compra (CompraId),
+
+    CONSTRAINT FK_MovimientoStock_Venta
+        FOREIGN KEY (VentaId)
+        REFERENCES Venta (VentaId),
+
+    CONSTRAINT CHK_MovimientoStock_Cantidad
+        CHECK (Cantidad > 0)
+);
